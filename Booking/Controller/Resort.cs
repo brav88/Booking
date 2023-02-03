@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Web;
 using m = Booking.Model;
 
@@ -35,11 +36,28 @@ namespace Booking.Controller
                 Id = 3,
                 Name = "Baldi San Carlos",
                 Description = "El Golfo del Papagayo ha sido considerado desde principios de siglo la joya del Pacífico, y este resort ha sabido mimetizarse con el exuberante entorno natural. Por eso, los huéspedes pueden disfrutar a la vez de la comodidad del programa todo incluido y de la exótica fauna que habita en las inmediaciones.",
-                Photo = "../Images/2.jpg",
+                Photo = "../Images/3.jpg",
                 Price = 160
             });
 
             return resortsList;
+        }
+
+        public List<m.Resort> GetResort(int id)
+        {
+            List<m.Resort> resortsList = GetResorts();
+
+            foreach(m.Resort resort in resortsList)
+            {
+                if(resort.Id == id)
+                {
+                    resortsList.Clear();
+                    resortsList.Add(resort);
+                    return resortsList;
+                }
+            }
+
+            return null;
         }
     }
 }
