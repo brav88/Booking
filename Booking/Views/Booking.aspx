@@ -5,13 +5,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
     <link rel="stylesheet"
         id="theme_link"
         href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.1.2/lux/bootstrap.min.css" />
     <link href="../css/resorts.css" rel="stylesheet" />
-    <title></title>
+    <script src="../js/site.js"></script>
+    <title>My Bookings</title>
 </head>
 <body>
     <form id="form1" runat="server">
@@ -65,22 +69,61 @@
                 <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div class="offcanvas-body">
-                <div class="card">
+                <div class="card" id="cardLogin" runat="server">
                     <div class="card-body">
                         <div class="form-group">
                             <label class="form-label mt-4">Login form</label>
                             <div class="form-floating mb-3">
-                                <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" />
+                                <input type="email" runat="server" class="form-control" id="txtEmail" placeholder="name@example.com" />
                                 <label for="floatingInput">Email address</label>
                             </div>
                             <div class="form-floating">
-                                <input type="password" class="form-control" id="floatingPassword" placeholder="Password" />
+                                <input type="password" runat="server" class="form-control" id="txtPassword" placeholder="Password" />
                                 <label for="floatingPassword">Password</label>
                             </div>
                         </div>
                     </div>
                     <div class="card-footer">
-                        <button id="btnLogin" class="btn btn-primary" runat="server">Login</button>
+                        <button id="btnLogin" class="btn btn-primary" runat="server" onserverclick="btnLogin_ServerClick">Login</button>
+                    </div>
+                </div>
+                <div hidden="hidden" id="cardUser" runat="server">
+                    <div class="form-group">
+                        <div class="card" style="border-radius: 15px;">
+                            <div class="card-body p-4">
+                                <div class="row">
+                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp"
+                                        alt="Generic placeholder image" class="img-fluid"
+                                        style="width: 180px; border-radius: 10px;" />
+                                    <div class="row">
+                                        <h5 class="mb-1">Danny McLoan</h5>
+                                        <div class="d-flex pt-1">
+                                            <button type="button" class="btn btn-outline-primary me-1 flex-grow-1">View profile</button>
+                                            <button type="button" class="btn btn-primary flex-grow-1">Logout</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <label id="lblMessage"></label>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
                     </div>
                 </div>
             </div>

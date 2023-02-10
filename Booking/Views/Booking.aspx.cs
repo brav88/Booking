@@ -17,5 +17,24 @@ namespace Booking
             repResorts.DataSource = resortController.GetResorts();
             repResorts.DataBind();
         }
+
+        protected void btnLogin_ServerClick(object sender, EventArgs e)
+        {
+            string msg = string.Empty;
+            c.Login loginController = new c.Login();
+
+            if (loginController.SignInWithPassword(new Model.User { Email = txtEmail.Value, Password = txtPassword.Value }))
+            {
+                //msg = "Login successfull";
+                cardLogin.Attributes.Add("hidden", "hidden");
+                cardUser.Attributes.Remove("hidden");
+            }
+            else
+            {
+                msg = "Incorrect credentials";
+            }
+
+            //Page.ClientScript.RegisterStartupScript(this.GetType(), "CallMyFunction", "showModal('"+ msg +"')", true);
+        }
     }
 }
