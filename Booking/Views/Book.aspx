@@ -16,7 +16,7 @@
 <body>
     <form id="form1" runat="server">
         <div>
-             <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
                 <div class="container-fluid">
                     <a class="navbar-brand" href="#">Booking.com</a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
@@ -28,7 +28,7 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="Booking.aspx">Resorts</a>
                             </li>
-                        </ul>                        
+                        </ul>
                     </div>
                 </div>
             </nav>
@@ -58,8 +58,9 @@
                                     <div class="col">
                                         <label for="checkin" class="form-label mt-4">Checkin</label>
                                     </div>
-                                    <div class="col">
-                                        <input id="date1" runat="server" type="date" class="form-control mt-3" />
+                                    <div class="col">                                        
+                                         <asp:Calendar class="form-control" ID="calCheckin" runat="server">
+                                        </asp:Calendar>
                                     </div>
                                 </div>
                             </div>
@@ -69,24 +70,29 @@
                                         <label for="checkout" class="form-label mt-4">Checkout</label>
                                     </div>
                                     <div class="col">
-                                        <input type="date" class="form-control mt-3" />
+                                        <asp:Calendar class="form-control" ID="calCheckOut" runat="server" 
+                                            OnSelectionChanged="calCheckOut_SelectionChanged">
+                                        </asp:Calendar>                                        
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="adults" class="form-label mt-4">Adults</label>
-                                <select class="form-select" id="adults">
-                                    <option>1</option>
-                                    <option>2</option>
-                                </select>
+                                <asp:DropDownList class="form-select" ID="dropDownAdult" runat="server">
+                                    <asp:ListItem Text="1" Value="1" />
+                                    <asp:ListItem Text="2" Value="2" />
+                                    <asp:ListItem Text="3" Value="3" />
+                                </asp:DropDownList>
                             </div>
                             <div class="form-group">
                                 <label for="kids" class="form-label mt-4">Kids</label>
-                                <select class="form-select" id="kids">
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                </select>
+
+                                <asp:DropDownList AutoPostBack="true" class="form-select" ID="dropDownKids" runat="server" OnSelectedIndexChanged="dropDownKids_SelectedIndexChanged">
+                                    <asp:ListItem Text="0" Value="0" />
+                                    <asp:ListItem Text="1" Value="1" />
+                                    <asp:ListItem Text="2" Value="2" />
+                                    <asp:ListItem Text="3" Value="3" />
+                                </asp:DropDownList>
                             </div>
                             <div class="form-group">
                                 <div class="col text-center">
@@ -105,12 +111,44 @@
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col">
+                                        <label for="checkin" class="form-label mt-4">Nights</label>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text">
+                                                <label id="lblNights" runat="server"></label>
+                                            </span>
+                                            <span class="input-group-text">x $<label id="lblPrice" runat="server"></label></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="divExtraMember" runat="server" class="form-group" hidden="hidden">
+                                <div class="row">
+                                    <div class="col">
+                                        <label for="checkin" class="form-label mt-4">Extra member</label>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text">$</span>
+                                            <span class="input-group-text">
+                                                <label id="lblExtraMemberCost" runat="server"></label>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col">
                                         <label for="checkin" class="form-label mt-4">Cost</label>
                                     </div>
                                     <div class="col-6">
                                         <div class="input-group mb-3">
                                             <span class="input-group-text">$</span>
-                                            <span class="input-group-text">1500</span>
+                                            <span class="input-group-text">
+                                                <label id="lblCost" runat="server"></label>
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
@@ -150,7 +188,9 @@
                                     <div class="col-6">
                                         <div class="input-group mb-3">
                                             <span class="input-group-text">$</span>
-                                            <span class="input-group-text">1530</span>
+                                            <span class="input-group-text">
+                                                <label id="lblTotal" runat="server"></label>
+                                            </span>
                                         </div>
                                     </div>
                                 </div>

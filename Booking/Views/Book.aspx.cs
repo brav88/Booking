@@ -1,10 +1,13 @@
-﻿using System;
+﻿using Booking.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using c = Booking.Controller;
+using m = Booking.Model;
 
 namespace Booking.Views
 {
@@ -12,17 +15,74 @@ namespace Booking.Views
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            c.Resort resortController = new c.Resort();
+            if (!IsPostBack)
+            {
+                if (Session["loginInfo"] == null)
+                {
+                    Response.Redirect("Booking.aspx?session=false");
+                }
 
-            int id = Convert.ToInt16(Request.QueryString["id"]);
+                int id = Convert.ToInt16(Request.QueryString["id"]);
 
-            repResort.DataSource = resortController.GetResort(id);
-            repResort.DataBind();
+                c.Resort resortController = new c.Resort();
+                List<m.Resort> resort = resortController.GetResort(id);
+                Session["resort"] = resort;                
+
+                calCheckin.SelectedDate = DateTime.Now.AddMonths(1);
+                calCheckOut.SelectedDate = DateTime.Now.AddMonths(1).AddDays(4);
+
+                CalculateBookCost();
+
+                repResort.DataSource = resort;
+                repResort.DataBind();
+            }
+        }
+
+        private void CalculateBookCost()
+        {
+            List<m.Resort> resort = (List<m.Resort>)Session["resort"];
+
+            m.Book book = new m.Book()
+            {
+                Id = resort[0].Id,
+                Session = (m.LoginResponsePayload)Session["loginInfo"],
+                Price = resort[0].Price,
+                Checkin = calCheckin.SelectedDate,
+                Checkout = calCheckOut.SelectedDate,
+                Kids = Convert.ToInt16(dropDownKids.SelectedValue)
+            };
+
+            lblNights.InnerText = book.GetNights().ToString();
+            lblPrice.InnerText = book.Price.ToString();
+            lblCost.InnerText = book.GetCost().ToString();
+            lblTotal.InnerText = book.GetTotal().ToString();
+
+            if (book.Kids > 0)
+            {
+                divExtraMember.Attributes.Remove("hidden");
+                lblExtraMemberCost.InnerText = book.GetExtraMember().ToString();
+            }
+
+            Session["Book"] = book;
         }
 
         protected void btnSave_ServerClick(object sender, EventArgs e)
         {
-          
+            m.Book book = (m.Book)Session["Book"];
+
+            c.Book controllerBook = new c.Book();
+
+            controllerBook.SaveBook(book);
+        }
+
+        protected void dropDownKids_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            CalculateBookCost();
+        }
+
+        protected void calCheckOut_SelectionChanged(object sender, EventArgs e)
+        {
+            CalculateBookCost();
         }
     }
 }

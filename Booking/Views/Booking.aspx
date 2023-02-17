@@ -74,11 +74,11 @@
                         <div class="form-group">
                             <label class="form-label mt-4">Login form</label>
                             <div class="form-floating mb-3">
-                                <input type="email" runat="server" class="form-control" id="txtEmail" placeholder="name@example.com" />
+                                <input type="email" runat="server" class="form-control" id="txtEmail" value="brav850@gmail.com" placeholder="name@example.com" />
                                 <label for="floatingInput">Email address</label>
                             </div>
                             <div class="form-floating">
-                                <input type="password" runat="server" class="form-control" id="txtPassword" placeholder="Password" />
+                                <input type="text" runat="server" class="form-control" value="Admin$1234" id="txtPassword" placeholder="Password" />
                                 <label for="floatingPassword">Password</label>
                             </div>
                         </div>
@@ -96,7 +96,7 @@
                                         alt="Generic placeholder image" class="img-fluid"
                                         style="width: 180px; border-radius: 10px;" />
                                     <div class="row">
-                                        <h5 class="mb-1">Danny McLoan</h5>
+                                        <h5 id="lblName" runat="server" class="mb-1"></h5>
                                         <div class="d-flex pt-1">
                                             <button type="button" class="btn btn-outline-primary me-1 flex-grow-1">View profile</button>
                                             <button type="button" class="btn btn-primary flex-grow-1">Logout</button>

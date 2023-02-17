@@ -13,10 +13,10 @@ namespace Booking.Controller
 {
     public class Login
     {
-        public bool SignInWithPassword(User user)
+        public LoginResponsePayload SignInWithPassword(LoginResponsePayload user)
         {
             var url = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDRP8QQqUI1qsG8Py3o8VfT0Vm-26Np2RM";
-            var postData = "{'email':'"+ user.Email + "','password':'"+ user.Password + "','returnSecureToken':true}";
+            var postData = "{'email':'"+ user.email + "','password':'"+ user.password + "','returnSecureToken':true}";
 
             HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
             request.Method = "POST";
@@ -34,12 +34,12 @@ namespace Booking.Controller
                 {
                     LoginResponsePayload payload = JsonConvert.DeserializeObject<LoginResponsePayload>(reader.ReadToEnd());
 
-                    return payload.registered;
+                    return payload;
                 }       
             }
             catch
             {
-                return false;
+                return null;
             }
         }
     }

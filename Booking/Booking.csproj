@@ -80,8 +80,10 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\Book.cs" />
     <Compile Include="Controller\Login.cs" />
     <Compile Include="Controller\Resort.cs" />
+    <Compile Include="Model\Book.cs" />
     <Compile Include="Model\Resort.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Views\Book.aspx.cs">

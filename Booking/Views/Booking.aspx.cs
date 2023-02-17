@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Booking.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -12,10 +13,20 @@ namespace Booking
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            c.Resort resortController = new c.Resort();
-            
-            repResorts.DataSource = resortController.GetResorts();
-            repResorts.DataBind();
+            if (!IsPostBack)
+            {
+                string session = Request.QueryString["session"];
+
+                if (session == "false")
+                {
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "CallMyFunction", "showModal('You must login to access this page')", true);
+                }
+
+                c.Resort resortController = new c.Resort();
+
+                repResorts.DataSource = resortController.GetResorts();
+                repResorts.DataBind();
+            }                       
         }
 
         protected void btnLogin_ServerClick(object sender, EventArgs e)
@@ -23,9 +34,18 @@ namespace Booking
             string msg = string.Empty;
             c.Login loginController = new c.Login();
 
-            if (loginController.SignInWithPassword(new Model.User { Email = txtEmail.Value, Password = txtPassword.Value }))
+            LoginResponsePayload loginInfo = loginController.SignInWithPassword(new Model.LoginResponsePayload
+                                                                                    { 
+                                                                                        email = txtEmail.Value, 
+                                                                                        password = txtPassword.Value 
+                                                                                    });
+
+            if (loginInfo.registered)
             {
-                //msg = "Login successfull";
+                Session["loginInfo"] = loginInfo;                
+
+                msg = "Welcome " + txtEmail.Value;
+                lblName.InnerText = txtEmail.Value;
                 cardLogin.Attributes.Add("hidden", "hidden");
                 cardUser.Attributes.Remove("hidden");
             }
@@ -34,7 +54,7 @@ namespace Booking
                 msg = "Incorrect credentials";
             }
 
-            //Page.ClientScript.RegisterStartupScript(this.GetType(), "CallMyFunction", "showModal('"+ msg +"')", true);
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "CallMyFunction", "showModal('"+ msg +"')", true);
         }
     }
 }
