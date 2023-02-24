@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Web;
@@ -11,53 +12,39 @@ namespace Booking.Controller
     {
         public List<m.Resort> GetResorts()
         {
-            List<m.Resort> resortsList = new List<m.Resort>();
+            DatabaseHelper.Database db = new DatabaseHelper.Database();
 
-            resortsList.Add(new m.Resort
-            {
-                Id = 1,
-                Name = "Riu Guanacaste",
-                Description = "Este hotel totalmente preparado para dar el mejor servicio a sus clientes dispone de piscina de agua dulce y terraza-solárium. En el Riu Resort encontrarás también jacuzzi, gimnasio, baño de vapor y un centro de wellness con diferentes tratamientos y masajes. Todo lo que necesitas para conseguir el máximo bienestar durante tu estancia.",
-                Photo = "../Images/1.jpg",
-                Price = 140
-            });
+            DataTable ds = db.GetResorts();
 
-            resortsList.Add(new m.Resort
-            {
-                Id = 2,
-                Name = "Occidental Papagayo",
-                Description = "El Golfo del Papagayo ha sido considerado desde principios de siglo la joya del Pacífico, y este resort ha sabido mimetizarse con el exuberante entorno natural. Por eso, los huéspedes pueden disfrutar a la vez de la comodidad del programa todo incluido y de la exótica fauna que habita en las inmediaciones.",
-                Photo = "../Images/2.jpg",
-                Price = 190
-            });
-
-            resortsList.Add(new m.Resort
-            {
-                Id = 3,
-                Name = "Baldi San Carlos",
-                Description = "El Golfo del Papagayo ha sido considerado desde principios de siglo la joya del Pacífico, y este resort ha sabido mimetizarse con el exuberante entorno natural. Por eso, los huéspedes pueden disfrutar a la vez de la comodidad del programa todo incluido y de la exótica fauna que habita en las inmediaciones.",
-                Photo = "../Images/3.jpg",
-                Price = 160
-            });
-
-            return resortsList;
+            return ConvertDSToList(ds);
         }
 
         public List<m.Resort> GetResort(int id)
         {
-            List<m.Resort> resortsList = GetResorts();
+            DatabaseHelper.Database db = new DatabaseHelper.Database();
 
-            foreach(m.Resort resort in resortsList)
+            DataTable ds = db.GetResort(id);
+
+            return ConvertDSToList(ds);
+        }
+
+        public List<m.Resort> ConvertDSToList(DataTable ds)
+        {
+            List<m.Resort> resortsList = new List<m.Resort>();
+
+            foreach (DataRow row in ds.Rows)
             {
-                if(resort.Id == id)
+                resortsList.Add(new m.Resort
                 {
-                    resortsList.Clear();
-                    resortsList.Add(resort);
-                    return resortsList;
-                }
+                    Id = Convert.ToInt16(row["id"]),
+                    Name = row["name"].ToString(),
+                    Description = row["description"].ToString(),
+                    Photo = row["photo"].ToString(),
+                    Price = Convert.ToDecimal(row["price"])
+                });
             }
 
-            return null;
+            return resortsList;
         }
     }
 }

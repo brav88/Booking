@@ -78,7 +78,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="adults" class="form-label mt-4">Adults</label>
-                                <asp:DropDownList class="form-select" ID="dropDownAdult" runat="server">
+                                <asp:DropDownList class="form-select" AutoPostBack="true" ID="dropDownAdult" runat="server" OnSelectedIndexChanged="dropDownAdult_SelectedIndexChanged">
                                     <asp:ListItem Text="1" Value="1" />
                                     <asp:ListItem Text="2" Value="2" />
                                     <asp:ListItem Text="3" Value="3" />

@@ -14,11 +14,11 @@ namespace Booking.Model
         public DateTime Checkout { get; set; }
         public int Adults { get; set; }
         public int Kids { get; set; }
-        private int Nights { get; set; }
-        private decimal Cost { get; set; }
-        private decimal CleaningTax { get; set; }
-        private decimal ServiceTax { get; set; }
-        private decimal Total { get; set; }
+        public int Nights { get; set; }
+        public decimal Cost { get; set; }
+        public decimal CleaningTax { get; set; }
+        public decimal ServiceTax { get; set; }
+        public decimal Total { get; set; }
 
         public decimal GetCost()
         {

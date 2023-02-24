@@ -49,13 +49,18 @@ namespace Booking.Views
                 Price = resort[0].Price,
                 Checkin = calCheckin.SelectedDate,
                 Checkout = calCheckOut.SelectedDate,
-                Kids = Convert.ToInt16(dropDownKids.SelectedValue)
+                Kids = Convert.ToInt16(dropDownKids.SelectedValue),
+                Adults = Convert.ToInt16(dropDownAdult.SelectedValue)                
             };
 
-            lblNights.InnerText = book.GetNights().ToString();
+            book.Nights = book.GetNights();
+            book.Cost = book.GetCost();
+            book.Total = book.GetTotal();
+
+            lblNights.InnerText = book.Nights.ToString();
             lblPrice.InnerText = book.Price.ToString();
-            lblCost.InnerText = book.GetCost().ToString();
-            lblTotal.InnerText = book.GetTotal().ToString();
+            lblCost.InnerText = book.Cost.ToString();
+            lblTotal.InnerText = book.Total.ToString();
 
             if (book.Kids > 0)
             {
@@ -81,6 +86,11 @@ namespace Booking.Views
         }
 
         protected void calCheckOut_SelectionChanged(object sender, EventArgs e)
+        {
+            CalculateBookCost();
+        }
+
+        protected void dropDownAdult_SelectedIndexChanged(object sender, EventArgs e)
         {
             CalculateBookCost();
         }

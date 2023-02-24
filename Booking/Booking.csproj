@@ -71,6 +71,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="css\resorts.css" />
+    <Content Include="DatabaseHelper\StoreProcedures\1. spGetResorts.sql" />
+    <Content Include="DatabaseHelper\StoreProcedures\2. spGetResort.sql" />
     <Content Include="Images\1.jpg" />
     <Content Include="Images\2.jpg" />
     <Content Include="Images\3.jpg" />
@@ -83,6 +85,7 @@
     <Compile Include="Controller\Book.cs" />
     <Compile Include="Controller\Login.cs" />
     <Compile Include="Controller\Resort.cs" />
+    <Compile Include="DatabaseHelper\Database.cs" />
     <Compile Include="Model\Book.cs" />
     <Compile Include="Model\Resort.cs" />
     <Compile Include="Model\User.cs" />
