@@ -11,6 +11,7 @@
     <link rel="stylesheet"
         id="theme_link"
         href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.1.2/lux/bootstrap.min.css" />
+     <script src="../js/site.js"></script>
     <title></title>
 </head>
 <body>
@@ -199,6 +200,25 @@
                         <div class="card-footer">
                             <button id="btnSave" class="btn btn-primary" runat="server" onserverclick="btnSave_ServerClick">Save</button>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">
+                            <label id="lblModalTitle"></label>
+                        </h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <label id="lblModalMessage"></label>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Ok</button>
                     </div>
                 </div>
             </div>

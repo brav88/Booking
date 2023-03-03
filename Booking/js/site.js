@@ -1,8 +1,10 @@
-﻿function showModal(msg) {
+﻿function showModal(title, msg) {
 
-    alert(msg);
+    document.getElementById('lblModalTitle').innerText = title;
+    document.getElementById('lblModalMessage').innerText = msg;
 
-    //document.getElementById("lblMessage").innerText = msg;
-    //jQuery.noConflict();
-    //$("#myModal").modal('show');
+    var myModal = new bootstrap.Modal(document.getElementById("exampleModal"), {});
+    document.onreadystatechange = function () {
+        myModal.show();
+    };
 }

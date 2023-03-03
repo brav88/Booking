@@ -1,11 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
+using System.Security.Permissions;
 using System.Web;
 using System.Web.UI.WebControls;
 
 namespace Booking.Model
 {
+    public enum Form
+    {
+        none,
+        moreThan15,
+        negativeNights
+    }
+
     public class Book : Resort
     {
         public int BookId { get; set; }
@@ -19,6 +28,8 @@ namespace Booking.Model
         public decimal CleaningTax { get; set; }
         public decimal ServiceTax { get; set; }
         public decimal Total { get; set; }
+
+        public bool isReady = false;
 
         public decimal GetCost()
         {
@@ -57,6 +68,21 @@ namespace Booking.Model
         public decimal GetTaxExtraMember(int extraMember)
         {
             return extraMember * (decimal)0.15;
+        }
+
+        public Form IsInvalidForm()
+        {
+            if (this.Nights <= 0)
+            {
+                return Form.negativeNights;
+            }
+
+            if (this.Nights > 15)
+            {
+                return Form.moreThan15;
+            }
+
+            return Form.none;
         }
     }
 }

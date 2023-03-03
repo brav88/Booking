@@ -15,11 +15,13 @@ namespace Booking
         {
             if (!IsPostBack)
             {
+                IsLogged();
+
                 string session = Request.QueryString["session"];
 
                 if (session == "false")
                 {
-                    Page.ClientScript.RegisterStartupScript(this.GetType(), "CallMyFunction", "showModal('You must login to access this page')", true);
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "CallMyFunction", "showModal('Login','You must login to access this page')", true);
                 }
 
                 c.Resort resortController = new c.Resort();
@@ -40,21 +42,33 @@ namespace Booking
                                                                                         password = txtPassword.Value 
                                                                                     });
 
-            if (loginInfo.registered)
+            if (loginInfo != null && loginInfo.registered)
             {
                 Session["loginInfo"] = loginInfo;                
-
                 msg = "Welcome " + txtEmail.Value;
-                lblName.InnerText = txtEmail.Value;
-                cardLogin.Attributes.Add("hidden", "hidden");
-                cardUser.Attributes.Remove("hidden");
+                IsLogged();
             }
             else
             {
                 msg = "Incorrect credentials";
             }
 
-            Page.ClientScript.RegisterStartupScript(this.GetType(), "CallMyFunction", "showModal('"+ msg +"')", true);
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "CallMyFunction", "showModal('Login','"+ msg +"')", true);
+        }
+
+        private void IsLogged()
+        {
+            if (Session["loginInfo"] != null)
+            {
+                cardLogin.Attributes.Add("hidden", "hidden");
+                cardUser.Attributes.Remove("hidden");
+            }
+        }
+
+        protected void btnLogout_ServerClick(object sender, EventArgs e)
+        {
+            Session.Clear();
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "CallMyFunction", "showModal('Login','Thank you for visiting Booking.com')", true);
         }
     }
 }

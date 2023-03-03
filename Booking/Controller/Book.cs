@@ -8,11 +8,20 @@ namespace Booking.Controller
 {
     public class Book
     {
-        public void SaveBook(m.Book book)
+        public bool SaveBook(m.Book book)
         {
-            //TO-DO
+            try
+            {
+                DatabaseHelper.Database db = new DatabaseHelper.Database();
 
-            //Database Conexion             
+                db.SaveBooking(book);
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

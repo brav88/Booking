@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Data.SqlTypes;
 using System.Linq;
 using System.Web;
+using m = Booking.Model;
 
 namespace Booking.DatabaseHelper
 {
@@ -12,11 +13,11 @@ namespace Booking.DatabaseHelper
     {
         const string database = "Booking";
         const string server = "localhost";
-        string cnn = $"Data Source={server};Initial Catalog={database};Integrated Security=True";
+        SqlConnection connection = new SqlConnection($"Data Source={server};Initial Catalog={database};Integrated Security=True");
 
         public DataTable GetResorts()
         {
-            return ExecuteQuery("[dbo].[spGetResorts]", null);
+            return this.Fill("[dbo].[spGetResorts]", null);
         }
 
         public DataTable GetResort(int id)
@@ -26,16 +27,31 @@ namespace Booking.DatabaseHelper
                 new SqlParameter("@id", id),
             };
 
-            return ExecuteQuery("[dbo].[spGetResort]", param);
+            return this.Fill("[dbo].[spGetResort]", param);
         }
 
-        public DataTable ExecuteQuery(string storedProcedure, List<SqlParameter> param)
+        public void SaveBooking(m.Book book)
+        {
+            List<SqlParameter> param = new List<SqlParameter>()
+            {
+                new SqlParameter("@resortId", book.Id),
+                new SqlParameter("@email", book.Session.email),
+                new SqlParameter("@checkin", book.Checkin),
+                new SqlParameter("@checkout", book.Checkout),
+                new SqlParameter("@adults", book.Adults),
+                new SqlParameter("@kids", book.Kids),
+                new SqlParameter("@cost", book.Cost),
+                new SqlParameter("@total", book.Total),
+            };
+
+            this.ExecuteQuery("[dbo].[spSaveBooking]", param);
+        }
+
+        public DataTable Fill(string storedProcedure, List<SqlParameter> param)
         {
             try
             {
-                DataTable ds = new DataTable();
-
-                using (SqlConnection connection = new SqlConnection(cnn))
+                using (this.connection)
                 {
                     connection.Open();
                     SqlCommand cmd = connection.CreateCommand();
@@ -44,21 +60,47 @@ namespace Booking.DatabaseHelper
 
                     if (param != null)
                     {
-                        foreach(SqlParameter p in param)
+                        foreach (SqlParameter p in param)
+                        {
+                            cmd.Parameters.Add(p);
+                        }
+                    }
+
+                    DataTable ds = new DataTable();
+                    SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                    adapter.Fill(ds);
+                    return ds;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void ExecuteQuery(string storedProcedure, List<SqlParameter> param)
+        {
+            try
+            {
+                using (this.connection)
+                {
+                    connection.Open();
+                    SqlCommand cmd = connection.CreateCommand();
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandText = storedProcedure;
+
+                    if (param != null)
+                    {
+                        foreach (SqlParameter p in param)
                         {
                             cmd.Parameters.Add(p);
                         }
                     }
 
                     cmd.ExecuteNonQuery();
-
-                    SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-                    adapter.Fill(ds);
                 }
-
-                return ds;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw ex;
             }
