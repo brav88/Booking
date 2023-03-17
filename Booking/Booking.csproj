@@ -73,12 +73,15 @@
     <Content Include="css\resorts.css" />
     <Content Include="DatabaseHelper\StoreProcedures\1. spGetResorts.sql" />
     <Content Include="DatabaseHelper\StoreProcedures\2. spGetResort.sql" />
+    <Content Include="DatabaseHelper\StoreProcedures\3. spSaveBooking.sql" />
+    <Content Include="DatabaseHelper\StoreProcedures\4. spGetMyBookings.sql" />
     <Content Include="Images\1.jpg" />
     <Content Include="Images\2.jpg" />
     <Content Include="Images\3.jpg" />
     <Content Include="js\site.js" />
     <Content Include="Views\Book.aspx" />
     <Content Include="Views\Booking.aspx" />
+    <Content Include="Views\myBookings.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -104,6 +107,13 @@
       <DependentUpon>Booking.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Views\myBookings.aspx.cs">
+      <DependentUpon>myBookings.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\myBookings.aspx.designer.cs">
+      <DependentUpon>myBookings.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

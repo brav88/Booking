@@ -42,7 +42,7 @@
                                 <h5 class="card-title"><%# Eval("Name")%></h5>
                                 <img src="<%# Eval("Photo")%>" class="card-img-top" alt="...">
                                 <div class="card-body">
-                                    <p class="card-text"><%# Eval("Description")%></p>
+                                    <section class="card-text"><%# Eval("Description")%></section>
                                 </div>
                             </div>
                         </ItemTemplate>

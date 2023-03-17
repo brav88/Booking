@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Booking.Model;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -45,6 +46,16 @@ namespace Booking.DatabaseHelper
             };
 
             this.ExecuteQuery("[dbo].[spSaveBooking]", param);
+        }
+
+        public DataTable GetMyBookings(string email)
+        {
+            List<SqlParameter> param = new List<SqlParameter>()
+            {
+                new SqlParameter("@email", email),
+            };
+
+            return this.Fill("[dbo].[spGetMyBookings]", param);
         }
 
         public DataTable Fill(string storedProcedure, List<SqlParameter> param)

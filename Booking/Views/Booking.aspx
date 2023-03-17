@@ -15,7 +15,7 @@
     <script src="../js/site.js"></script>
     <title>My Bookings</title>
 </head>
-<body>
+<body>    
     <form id="form1" runat="server">
         <div>
             <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -29,6 +29,9 @@
                         <ul class="navbar-nav me-auto">
                             <li class="nav-item">
                                 <a class="nav-link" href="Booking.aspx">Resorts</a>
+                            </li>
+                            <li id="tabBookings" hidden="hidden" runat="server" class="nav-item">
+                                <a class="nav-link" href="myBookings.aspx">My Bookings</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#offcanvasExample" data-bs-toggle="offcanvas" aria-controls="offcanvasExample">Login</a>
@@ -44,13 +47,14 @@
                         <div class="row">
                 </HeaderTemplate>
                 <ItemTemplate>
-                    <div id="cardResorts" class="card">
-                        <h5 class="card-title"><%# Eval("Name")%></h5>
+                    <div id="elementCard" class="card">
+                        <h5 id="" class="card-title"><%# Eval("Name")%></h5>
                         <img src="<%# Eval("Photo")%>" class="card-img-top" alt="...">
                         <div class="card-body">
                             <p class="card-text"><%# Eval("Description")%></p>
-                            <a href="Book.aspx?id=<%# Eval("Id")%>" class="btn btn-primary">Book! by $<%# Eval("Price")%> per night!</a>
-                        </div>
+                            <a href="Book.aspx?id=<%# Eval("Id")%>" class="btn btn-primary">Book! by $<%# Eval("Price")%> per night!</a>                            
+                            <%--<button runat="server" onserverclick="Unnamed_ServerClick" dataId='<%# Eval("Id")%>'>Test</button>--%>
+                        </div>                       
                     </div>
                 </ItemTemplate>
                 <FooterTemplate>
