@@ -1,4 +1,5 @@
 ﻿using Booking.Model;
+using Booking.Views;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -18,6 +19,22 @@ namespace Booking.Controller
                 DatabaseHelper.Database db = new DatabaseHelper.Database();
 
                 db.SaveBooking(book);
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public bool DeleteBooking(string email, int bookId)
+        {
+            try
+            {
+                DatabaseHelper.Database db = new DatabaseHelper.Database();
+
+                db.DeleteBooking(email, bookId);
 
                 return true;
             }

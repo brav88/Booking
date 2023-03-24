@@ -75,6 +75,7 @@
     <Content Include="DatabaseHelper\StoreProcedures\2. spGetResort.sql" />
     <Content Include="DatabaseHelper\StoreProcedures\3. spSaveBooking.sql" />
     <Content Include="DatabaseHelper\StoreProcedures\4. spGetMyBookings.sql" />
+    <Content Include="DatabaseHelper\StoreProcedures\5. spDeleteBooking.sql" />
     <Content Include="Images\1.jpg" />
     <Content Include="Images\2.jpg" />
     <Content Include="Images\3.jpg" />

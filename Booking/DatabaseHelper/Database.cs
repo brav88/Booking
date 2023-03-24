@@ -58,6 +58,17 @@ namespace Booking.DatabaseHelper
             return this.Fill("[dbo].[spGetMyBookings]", param);
         }
 
+        public void DeleteBooking(string email, int bookId)
+        {
+            List<SqlParameter> param = new List<SqlParameter>()
+            {
+                new SqlParameter("@email", email),
+                new SqlParameter("@bookId", bookId),
+            };
+
+            this.ExecuteQuery("[dbo].[spDeleteBooking]", param);
+        }
+
         public DataTable Fill(string storedProcedure, List<SqlParameter> param)
         {
             try

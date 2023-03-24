@@ -38,12 +38,73 @@
                 </div>
             </nav>
 
+            <%--  <div class="container">
+                <div class="row">
+
+                    <% for (int i = 0; i < bookList.Count; i++)
+                        {%>
+
+                    <div id="elementCard" class="card">
+                        <h5 id="" class="card-title"><%=bookList[i].Name%></h5>
+                        <img src="<%=bookList[i].Photo%>" class="card-img-top" alt="..." />
+                        <div class="card-body">
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <section class="card-text">Checkin: <%=bookList[i].Checkin%></section>
+                                </div>
+                                <div class="col">
+                                    <section class="card-text">Checkout: <%=bookList[i].Checkout%></section>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <section class="card-text">Adults: <%=bookList[i].Adults%></section>
+                                </div>
+                                <div class="col">
+                                    <section class="card-text">Kids: <%=bookList[i].Kids%></section>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <h4 class="card-text">Cost: $<%=bookList[i].Cost%></h4>
+                                </div>
+                                <div class="col">
+                                    <h4 class="card-text">Total: $<%=bookList[i].Total%></h4>                                    
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <button runat="server" type="button" dataid='<%=bookList[i].BookId%>' onserverclick="btnDelete_ServerClick" class="btn btn-danger">Delete</button>
+                                </div>
+                                <div class="col">
+                                    <a class="btn btn-success">Edit</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <%}%>
+                </div>
+            </div>--%>
+
             <asp:Repeater ID="repMyBookings" runat="server">
                 <HeaderTemplate>
                     <div class="container">
                         <div class="row">
                 </HeaderTemplate>
                 <ItemTemplate>
+                   <%-- <%if (i == 1)
+                        {
+                    %>
+                    <asp:Label ID="Label1" runat="server" Text="If Bloc">True</asp:Label><br />
+                    <%  }
+                        else
+                        {
+                    %>
+                    <asp:Label ID="Label2" runat="server" Text="Else Block">False</asp:Label>
+                    <%
+                        }
+                    %>--%>
                     <div id="elementCard" class="card">
                         <h5 id="" class="card-title"><%# Eval("Name")%></h5>
                         <img src="<%# Eval("Photo")%>" class="card-img-top" alt="...">
@@ -75,7 +136,7 @@
                             <hr />
                             <div class="row mb-3">
                                 <div class="col">
-                                    <a class="btn btn-danger">Delete</a>
+                                    <button runat="server" type="button" dataid='<%# Eval("bookId")%>' onserverclick="btnDelete_ServerClick" class="btn btn-danger">Delete</button>
                                 </div>
                                 <div class="col">
                                     <a class="btn btn-success">Edit</a>
@@ -86,9 +147,47 @@
                 </ItemTemplate>
                 <FooterTemplate>
                     </div>
-                    </div>
+                    </div>                   
                 </FooterTemplate>
             </asp:Repeater>
+
+            <div id="divNoBooks" runat="server" hidden="hidden">
+                <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-header">
+                        <h4 class="me-auto">:(</h4>
+                        <button type="button" class="btn-close ms-2 mb-1" data-bs-dismiss="toast" aria-label="Close">
+                            <span aria-hidden="true"></span>
+                        </button>
+                    </div>
+                    <div class="toast-body">
+                        You don't have any booking yet! 
+                        <br />
+                        <br />
+                        Please go <a href="Booking.aspx">here</a> to book.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">
+                            <label id="lblModalTitle"></label>
+                        </h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+
+                        <label id="lblModalMessage"></label>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancel</button>
+                        <button id="btnDeleteBooking" runat="server" onserverclick="btnConfirmDelete_ServerClick" class="btn btn-danger">Delete</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </form>
 </body>

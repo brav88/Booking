@@ -25,3 +25,10 @@ p {
 #offcanvasExampleLabel {
     color: white
 }
+
+#divNoBooks{
+    margin-top:200px;
+    display:flex;
+    justify-content:center;
+    align-items:center
+}
