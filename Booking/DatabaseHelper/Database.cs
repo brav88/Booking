@@ -48,6 +48,22 @@ namespace Booking.DatabaseHelper
             this.ExecuteQuery("[dbo].[spSaveBooking]", param);
         }
 
+        public void UpdateBooking(m.Book book)
+        {
+            List<SqlParameter> param = new List<SqlParameter>()
+            {
+                new SqlParameter("@bookId", book.BookId),
+                new SqlParameter("@checkin", book.Checkin),
+                new SqlParameter("@checkout", book.Checkout),
+                new SqlParameter("@adults", book.Adults),
+                new SqlParameter("@kids", book.Kids),
+                new SqlParameter("@cost", book.Cost),
+                new SqlParameter("@total", book.Total),
+            };
+
+            this.ExecuteQuery("[dbo].[spUpdateBooking]", param);
+        }
+
         public DataTable GetMyBookings(string email)
         {
             List<SqlParameter> param = new List<SqlParameter>()
@@ -56,6 +72,16 @@ namespace Booking.DatabaseHelper
             };
 
             return this.Fill("[dbo].[spGetMyBookings]", param);
+        }
+
+        public DataTable GetBooking(int bookId)
+        {
+            List<SqlParameter> param = new List<SqlParameter>()
+            {
+                new SqlParameter("@bookId", bookId),
+            };
+
+            return this.Fill("[dbo].[spGetBooking]", param);
         }
 
         public void DeleteBooking(string email, int bookId)

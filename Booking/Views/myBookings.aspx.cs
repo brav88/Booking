@@ -33,8 +33,6 @@ namespace Booking.Views
 
             c.Book bookController = new c.Book();
 
-            //this.bookList = bookController.GetMyBookings(session);
-
             repMyBookings.DataSource = bookController.GetMyBookings(session);
             repMyBookings.DataBind();
 

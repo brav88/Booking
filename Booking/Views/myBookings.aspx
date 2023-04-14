@@ -37,74 +37,12 @@
                     </div>
                 </div>
             </nav>
-
-            <%--  <div class="container">
-                <div class="row">
-
-                    <% for (int i = 0; i < bookList.Count; i++)
-                        {%>
-
-                    <div id="elementCard" class="card">
-                        <h5 id="" class="card-title"><%=bookList[i].Name%></h5>
-                        <img src="<%=bookList[i].Photo%>" class="card-img-top" alt="..." />
-                        <div class="card-body">
-                            <div class="row mb-3">
-                                <div class="col">
-                                    <section class="card-text">Checkin: <%=bookList[i].Checkin%></section>
-                                </div>
-                                <div class="col">
-                                    <section class="card-text">Checkout: <%=bookList[i].Checkout%></section>
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col">
-                                    <section class="card-text">Adults: <%=bookList[i].Adults%></section>
-                                </div>
-                                <div class="col">
-                                    <section class="card-text">Kids: <%=bookList[i].Kids%></section>
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col">
-                                    <h4 class="card-text">Cost: $<%=bookList[i].Cost%></h4>
-                                </div>
-                                <div class="col">
-                                    <h4 class="card-text">Total: $<%=bookList[i].Total%></h4>                                    
-                                </div>
-                            </div>
-                            <hr />
-                            <div class="row mb-3">
-                                <div class="col">
-                                    <button runat="server" type="button" dataid='<%=bookList[i].BookId%>' onserverclick="btnDelete_ServerClick" class="btn btn-danger">Delete</button>
-                                </div>
-                                <div class="col">
-                                    <a class="btn btn-success">Edit</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <%}%>
-                </div>
-            </div>--%>
-
             <asp:Repeater ID="repMyBookings" runat="server">
                 <HeaderTemplate>
                     <div class="container">
                         <div class="row">
                 </HeaderTemplate>
                 <ItemTemplate>
-                   <%-- <%if (i == 1)
-                        {
-                    %>
-                    <asp:Label ID="Label1" runat="server" Text="If Bloc">True</asp:Label><br />
-                    <%  }
-                        else
-                        {
-                    %>
-                    <asp:Label ID="Label2" runat="server" Text="Else Block">False</asp:Label>
-                    <%
-                        }
-                    %>--%>
                     <div id="elementCard" class="card">
                         <h5 id="" class="card-title"><%# Eval("Name")%></h5>
                         <img src="<%# Eval("Photo")%>" class="card-img-top" alt="...">
@@ -139,7 +77,7 @@
                                     <button runat="server" type="button" dataid='<%# Eval("bookId")%>' onserverclick="btnDelete_ServerClick" class="btn btn-danger">Delete</button>
                                 </div>
                                 <div class="col">
-                                    <a class="btn btn-success">Edit</a>
+                                    <a href="Book.aspx?id=<%# Eval("Id")%>&bookId=<%# Eval("bookId")%>" class="btn btn-success">Edit</a>
                                 </div>
                             </div>
                         </div>

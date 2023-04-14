@@ -23,13 +23,28 @@ namespace Booking.Views
                 }
 
                 int id = Convert.ToInt16(Request.QueryString["id"]);
+                string bookId = Request.QueryString["bookId"];
 
                 c.Resort resortController = new c.Resort();
+                c.Book bookController = new c.Book();
+
+                if (!string.IsNullOrEmpty(bookId))
+                {
+                    m.Book book = bookController.GetBooking(Convert.ToInt16(bookId));
+                    calCheckin.SelectedDate = book.Checkin;
+                    calCheckOut.SelectedDate = book.Checkout;
+                    dropDownAdult.SelectedValue = book.Adults.ToString();
+                    dropDownKids.SelectedValue = book.Kids.ToString();
+                    btnSave.InnerText = "Update";
+                }
+                else
+                {
+                    calCheckin.SelectedDate = DateTime.Now.AddMonths(1);
+                    calCheckOut.SelectedDate = DateTime.Now.AddMonths(1).AddDays(4);
+                }
+
                 List<m.Resort> resort = resortController.GetResort(id);
                 Session["resort"] = resort;
-
-                calCheckin.SelectedDate = DateTime.Now.AddMonths(1);
-                calCheckOut.SelectedDate = DateTime.Now.AddMonths(1).AddDays(4);
 
                 CalculateBookCost(false);
 
@@ -88,6 +103,7 @@ namespace Booking.Views
 
         protected void btnSave_ServerClick(object sender, EventArgs e)
         {
+            string bookId = Request.QueryString["bookId"];
             string msg = string.Empty;
             m.Book book = (m.Book)Session["Book"];
 
@@ -95,13 +111,29 @@ namespace Booking.Views
             {
                 c.Book controllerBook = new c.Book();
 
-                if (controllerBook.SaveBook(book))
+                if (!string.IsNullOrEmpty(bookId))
                 {
-                    msg = "Your book was saved successfully";
+                    book.BookId = Convert.ToInt16(bookId);
+
+                    if (controllerBook.UpdateBook(book))
+                    {
+                        msg = "Your book was updated successfully";
+                    }
+                    else
+                    {
+                        msg = "Unhandled error updating your booking, please contact the administrador";
+                    }
                 }
                 else
                 {
-                    msg = "Unhandled error saving your booking, please contact the administrador";
+                    if (controllerBook.SaveBook(book))
+                    {
+                        msg = "Your book was saved successfully";
+                    }
+                    else
+                    {
+                        msg = "Unhandled error saving your booking, please contact the administrador";
+                    }
                 }
             }
             else

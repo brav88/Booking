@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Web;
 using System.Web.UI;
 using m = Booking.Model;
@@ -28,6 +29,23 @@ namespace Booking.Controller
             }
         }
 
+        public bool UpdateBook(m.Book book)
+        {
+            try
+            {
+                DatabaseHelper.Database db = new DatabaseHelper.Database();
+
+                db.UpdateBooking(book);
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+
         public bool DeleteBooking(string email, int bookId)
         {
             try
@@ -44,6 +62,30 @@ namespace Booking.Controller
             }
         }
 
+        public m.Book GetBooking(int bookId)
+        {            
+            DatabaseHelper.Database db = new DatabaseHelper.Database();
+
+            DataTable ds = db.GetBooking(bookId);
+
+            foreach (DataRow row in ds.Rows)
+            {
+                return new m.Book
+                {
+                    Id = Convert.ToInt16(row["resortId"]),
+                    BookId = Convert.ToInt16(row["bookId"]),
+                    Checkin = Convert.ToDateTime(row["checkin"]),
+                    Checkout = Convert.ToDateTime(row["checkout"]),
+                    Adults = Convert.ToInt16(row["adults"]),
+                    Kids = Convert.ToInt16(row["kids"]),
+                    Cost = Convert.ToInt16(row["cost"]),
+                    Total = Convert.ToInt16(row["total"]),
+                };
+            }  
+            
+            return null;
+        }
+
         public List<m.Book> GetMyBookings(LoginResponsePayload session)
         {
             List<m.Book> bookList = new List<m.Book>();
@@ -55,6 +97,7 @@ namespace Booking.Controller
             {
                 bookList.Add(new m.Book
                 {
+                    Id = Convert.ToInt16(row["resortId"]),
                     BookId = Convert.ToInt16(row["bookId"]),
                     Checkin = Convert.ToDateTime(row["checkin"]),
                     Checkout = Convert.ToDateTime(row["checkout"]),
